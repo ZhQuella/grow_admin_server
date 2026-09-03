@@ -1,0 +1,28 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(':grow-base-service:base-common')
+    implementation project(':grow-base-service:base-infra')
+    implementation project(':grow-base-service:base-security')
+    implementation project(':grow-base-service:base-account')
+    implementation project(':grow-base-service:base-access')
+    implementation project(':grow-base-service:base-org')
+    implementation project(':grow-base-service:base-designer')
+    implementation project(':grow-base-service:base-runtime')
+    implementation project(':grow-business:business-common')
+    implementation project(':grow-business:business-workspace')
+    implementation project(':grow-business:business-oa')
+    implementation project(':grow-business:business-crm')
+    implementation project(':grow-business:business-demo')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'com.mybatis-flex:mybatis-flex-spring-boot3-starter:1.7.7'
+    annotationProcessor 'com.mybatis-flex:mybatis-flex-processor:1.7.7'
+    implementation 'com.mybatis-flex:mybatis-flex-core:1.7.7'
+    implementation 'com.mybatis-flex:mybatis-flex-spring:1.7.7'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+}

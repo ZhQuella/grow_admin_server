@@ -1,0 +1,3 @@
+dependencies {
+    implementation project(':grow-base-service:base-common')
+}

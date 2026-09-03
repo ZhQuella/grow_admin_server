@@ -1,68 +1,62 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.0'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'checkstyle'
-	id 'io.freefair.lombok' version '5.3.0'
+    id 'org.springframework.boot' version '3.2.0' apply false
+    id 'io.spring.dependency-management' version '1.1.4' apply false
 }
 
-group = 'dev.gad'
-version = '0.0.1-SNAPSHOT'
-apply plugin: 'io.freefair.lombok'
+allprojects {
+    group = 'dev.gad'
+    version = '0.0.1-SNAPSHOT'
 
-java {
-	sourceCompatibility = '21'
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    repositories {
+        mavenCentral()
+    }
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-	mavenCentral()
-}
+    java {
+        sourceCompatibility = '17'
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	compileOnly 'org.projectlombok:lombok:1.18.12'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	checkstyle 'com.puppycrawl.tools:checkstyle:10.3.1'
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-	implementation("com.mybatis-flex:mybatis-flex-spring-boot3-starter:1.7.7")
-	annotationProcessor("com.mybatis-flex:mybatis-flex-processor:1.7.7")
-	implementation 'com.mybatis-flex:mybatis-flex-core:1.7.7'
-	implementation 'com.mybatis-flex:mybatis-flex-spring:1.7.7'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-}
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
 
-checkstyle {
-	// 配置Checkstyle规则
-	configFile = file("${rootDir}/scripts/checkstyle.xml")
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-dependencies:3.2.0'
+        }
+    }
 
-	// 配置需要检查的源代码目录
-	sourceSets = [sourceSets.main]
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.30'
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        checkstyle 'com.puppycrawl.tools:checkstyle:10.3.1'
+    }
 
-	// 配置Checkstyle任务执行时的编码设置
-	toolVersion = "10.3.1"
-}
+    checkstyle {
+        configFile = file("${rootDir}/scripts/checkstyle.xml")
+        sourceSets = [sourceSets.main]
+        toolVersion = '10.3.1'
+    }
 
-tasks.withType(JavaCompile) {
-	options.fork = true
-	options.forkOptions.jvmArgs += ["-Xmx512m", "-Dfile.encoding=UTF-8"]
-	options.forkOptions.jvmArgs += ["--add-opens", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"]
-	options.forkOptions.jvmArgs += ["--add-opens", "jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED"]
-}
+    tasks.withType(JavaCompile).configureEach {
+        options.fork = true
+        options.forkOptions.jvmArgs += ['-Xmx512m', '-Dfile.encoding=UTF-8']
+        options.forkOptions.jvmArgs += ['--add-opens', 'jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED']
+        options.forkOptions.jvmArgs += ['--add-opens', 'jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED']
+    }
 
-tasks.named('test') {
-	useJUnitPlatform()
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+    }
 }

@@ -1,2 +1,18 @@
-rootProject.name = 'backend'
-include 'utils'
+rootProject.name = 'grow-admin-server'
+
+include 'grow-start'
+
+include 'grow-base-service:base-common'
+include 'grow-base-service:base-infra'
+include 'grow-base-service:base-security'
+include 'grow-base-service:base-account'
+include 'grow-base-service:base-access'
+include 'grow-base-service:base-org'
+include 'grow-base-service:base-designer'
+include 'grow-base-service:base-runtime'
+
+include 'grow-business:business-common'
+include 'grow-business:business-workspace'
+include 'grow-business:business-oa'
+include 'grow-business:business-crm'
+include 'grow-business:business-demo'

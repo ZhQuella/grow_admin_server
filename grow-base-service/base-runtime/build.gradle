@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':grow-base-service:base-common')
+    implementation project(':grow-base-service:base-infra')
+    implementation project(':grow-base-service:base-access')
+    implementation project(':grow-base-service:base-org')
+    implementation project(':grow-base-service:base-designer')
+}
