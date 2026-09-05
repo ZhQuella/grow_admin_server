@@ -1,2 +1,69 @@
 server:
   port: 9000
+
+spring:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3306/flex_test
+      username: root
+      password: 12345678
+    postgres:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: 12345678
+
+security:
+  cors:
+    allowed-origin-patterns:
+      - http://localhost:*
+      - http://127.0.0.1:*
+  jwt:
+    issuer: grow-admin-server
+    # 本地开发默认值，生产环境必须通过环境变量覆盖
+    base64-secret: ${JWT_BASE64_SECRET:Z3Jvdy1hZG1pbi1kZXZlbG9wbWVudC1qd3Qtc2VjcmV0LWtleS0yMDI2}
+    access-token-ttl: 2h
+    refresh-token-ttl: 7d
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    groups-order: ASC
+    tags-sorter: alpha
+    operations-sorter: method
+  group-configs:
+    - group: 01-account
+      display-name: 01 - 账号与登录
+      packages-to-scan:
+        - dev.gad.account
+    - group: 02-access
+      display-name: 02 - 权限管理
+      packages-to-scan:
+        - dev.gad.access
+    - group: 03-organization
+      display-name: 03 - 组织管理（人员、部门、岗位、职级）
+      packages-to-scan:
+        - dev.gad.org
+    - group: 04-designer
+      display-name: 04 - 设计器
+      packages-to-scan:
+        - dev.gad.designer
+    - group: 05-runtime
+      display-name: 05 - 运行时
+      packages-to-scan:
+        - dev.gad.runtime
+    - group: 06-workspace
+      display-name: 06 - 工作台
+      packages-to-scan:
+        - dev.gad.business.workspace
+    - group: 07-oa
+      display-name: 07 - OA
+      packages-to-scan:
+        - dev.gad.business.oa
+    - group: 08-crm
+      display-name: 08 - CRM
+      packages-to-scan:
+        - dev.gad.business.crm
+    - group: 09-demo
+      display-name: 09 - 演示与测试
+      packages-to-scan:
+        - dev.gad.business.demo
